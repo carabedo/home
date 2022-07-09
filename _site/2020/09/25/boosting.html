@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<title>Boosting | data,math,code</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<!--[if lte IE 8]><script src="/home/assets/js/ie/html5shiv.js"></script><![endif]-->
+	<link rel="stylesheet" href="/home/assets/css/main.css" />
+	<!--[if lte IE 9]><link rel="stylesheet" href="/home/assets/css/ie9.css" /><![endif]-->
+	<!--[if lte IE 8]><link rel="stylesheet" href="/home/assets/css/ie8.css" /><![endif]-->
+</head>
+
+
+<body>
+
+    <!-- Wrapper -->
+<div id="wrapper">
+
+<!-- Header -->
+<header id="header">
+	<a href="http://localhost:4000/home/" class="logo"><strong>data,math,code</strong> <span>carabedo</span></a>
+	<nav>
+		<a href="#menu">Menu</a>
+	</nav>
+</header>
+
+<!-- Menu -->
+<nav id="menu">
+	<ul class="links">
+        
+		    
+		
+		    
+		
+		    
+		
+		    
+		
+		    
+		        <li><a href="http://localhost:4000/home/">Home</a></li>
+	    	
+		
+		    
+		
+		    
+		
+		    
+		
+		
+		    
+		
+		    
+		        <li><a href="http://localhost:4000/home/all_posts.html">All posts</a></li>
+		    
+		
+		    
+		        <li><a href="http://localhost:4000/home/pages/cloud.html">cloud & security</a></li>
+		    
+		
+		    
+		        <li><a href="http://localhost:4000/home/pages/dev.html">web development</a></li>
+		    
+		
+		    
+		
+		    
+		        <li><a href="http://localhost:4000/home/pages/machine.html">machine learning</a></li>
+		    
+		
+		    
+		        <li><a href="http://localhost:4000/home/pages/presentaciones.html">clases</a></li>
+		    
+		
+	</ul>
+
+</nav>
+ 
+    
+    
+<!-- Main -->
+<div id="main" class="alt">
+
+<!-- One -->
+<section id="one" >
+	<div class="inner" style="width : 60%">
+		<header class="major">
+			<h1>Boosting</h1>
+		</header>
+		
+		<p>En este articulo voy a dar una introduccion al aprendizaje por ensambles con principal foco en boosting. Partamos de la base de modelos sencillos como regresion lineal o logistica como estandares para la resolucion de problemas de regresion o clasificacion. Algo que nos era dificil con estos modelos era explicar comportamientos no lineales, uno debe hacer una ingeneriera de features para incorporar interacciones no lineales entre las variables. Un metodo de ajuste que funciona muy bien con las no linealidades es el arbol de decision.</p>
+
+<h2 id="arboles-de-decision">Arboles de decision:</h2>
+
+<p>Un arbol de decision es un metodo no parametrico de ajuste, es decir no busca una relacion funcional $ y=f(x)$ entre la variable target y las variables explicativas. Consiste en la particion iterativa del espacio de fases asignando un valor constante a cada region de manera tal de poder predecir el valor de nuevas observaciones que caigan en esta region. Su construccion es bastante intuitiva asi como su interpretacion visual.</p>
+
+<p>Un ejemplo de clasificacion en dos variables:</p>
+
+<p><img src="https://github.com/carabedo/carabedo.github.io/raw/main/assets/img/dt_0.png" alt="" /></p>
+
+<p>Iterativamente vamos particionando el espacio de fases de manera de elegir las regiones que mejor ajusten a los datos.</p>
+
+<p><img src="https://github.com/carabedo/carabedo.github.io/raw/main/assets/img/dt_1.png" alt="" /></p>
+
+<p>Veamos como se construye con un ejemplo de regresion en una variable, tenemos estos datos con un compartamiento fuertemente no lineal:</p>
+
+<p><img src="https://github.com/carabedo/carabedo.github.io/raw/main/assets/img/dt_2.png" alt="" /></p>
+
+<p>Se puede ver que una regresion lineal performa muy mal, ahora ajustemos estos datos con un arbol de decision de 2 niveles:</p>
+
+<p><img src="https://github.com/carabedo/carabedo.github.io/raw/main/assets/img/dt_5.png" alt="" /></p>
+
+<p>Los puntos rojos representan el ajuste por el arbol de decision, parecen existir 4 rectas horizontales que ajustan los datos, hemo particionado en 4 regiones la variable x. Para cada region se le asigno un valor de la variable y. Esto permitio representar de mejor manera el comportamiento no lineal de los datos. Pero, que signifca un arbol de dos niveles? Por que solo hay cuatro regiones?</p>
+
+<p>Aqui el grafico del arbol de decision propiamente dicho, se ve el proceso en el que fue creado. Desde una raiz se van abriendo ramas y terminan en hojas. Las hojas son las regiones finales, hay un nivel por cada vez que se particionaron regiones.</p>
+
+<p><img src="https://github.com/carabedo/carabedo.github.io/raw/main/assets/img/dt_6.png" alt="" /></p>
+
+<p>En las hojas, entran nuestros datos, son las 4 regiones que vemos en el grafico del ajuste. Tanto como el nivel y la cantidad de hojas son hiperparametros de los modelos de arbol de decision.</p>
+
+<h4 id="como-elegimos-y-armamos-las-regiones">Como elegimos y armamos las regiones?</h4>
+
+<p>Este es un proceso iterativo, se utiliza alguna metricas para decidir en cada paso una particion binaria en alguna variable. Ademas es jerarquico, en cada iteraccion se hace una eleccion de variable y de threshold que maximice el error cuadratico medio.</p>
+
+<p>¿Cómo construye la computadora un árbol de regresión?
+El enfoque ideal sería que la computadora considere todas las particiones posibles del espacio de atributos. Sin embargo esto es computacionalmente inviable, por lo que en su lugar se utiliza un algorítmo voraz (greedy) de división binaria recursiva:</p>
+
+<p>Comenzar en la raíz del árbol.
+Para cada atributo, examinar cada punto de corte posible y elegir el atributo y punto de corte de manera que el árbol resultante de hacer la división tenga el menor error cuadrático medio (ECM).
+Repetir el proceso para las dos ramas resultantes y nuevamente hacer una sola división (en cada rama) para minimizar el ECM.
+Repitir este proceso hasta que se cumpla un criterio de detención.
+¿Cómo sabe cuándo parar?</p>
+
+<p>Podríamos definir un criterio de detención, como la profundidad máxima del árbol o el número mínimo de muestras en la hoja.
+También podríamos hacer crecer el árbol grande y luego “podarlo” utilizando algún método de poda como “cost complexity pruning”
+¿Como decidir que división es la mejor?</p>
+
+<p>Una forma de decidir cual es la mejor división es calcular la ganancia en la reduccion del error cuadrático medio, si se aplica la división candidata.</p>
+
+\[\Delta = ECM(\text{padre}) - \sum_{j \in \text{hijos}}\frac{N_j}{N}ECM(\text{hijo}_j)\]
+
+<p>El objetivo es buscar la maxima  $\Delta$, donde  ECM es el Error Cuadrático Medio,  $N_j$  es el número de registros en el nodo hijo j  y  N  es el número de registros en el nodo padre.</p>
+
+<h4 id="por-que-usar-arboles-de-decision">Por que usar arboles de decision?</h4>
+
+<p>Los árboles son muy fáciles de explicar a las personas.
+Parecen más cercanos a la forma en la que las personas toman decisiones 
+Pueden ser representados gráficamente, pueden ser interpretados por no expertos fácilmente (especialmente si son pequeños)
+Pueden manejar fácilmente predictores cualitativos sin necesidad de crear variables dummy.</p>
+
+<h4 id="por-que-no-usar-arboles-de-decision">Por que no usar arboles de decision?</h4>
+
+<p>En general no tienen el mismo nivel de precisión en la predicción comparados con otros enfoques para regresión y clasificación vistos previamente. 
+Además pueden ser poco robustos. Un pequeño cambio en los datos puede generar un gran cambio el árbol final estimado. Sin embargo al agregar muchos árboles de decisión usando métodos como bagging, random forests, y  boosting la performance predictiva de los árboles puede mejorarse sustancialmente.</p>
+
+<h2 id="por-que-esambles">Por que Esambles?</h2>
+
+<p>El problema de un modelo con un solo arbol de decision es el overfitting, una solucion a esto es usar un ensamble de arboles. Si ajustamos 50 arboles de decision y luego promediamos sus resultados podremos evitar el overfitting. A esto se lo conoce como bagging, otra manera de realizar estos ensambles es boosting.
+Boosting consiste en entrenar varios modelos de manera secuencial, entrenando un nuevo modelo sobre los datos que menor permormance tuvo el modelo anterior.</p>
+
+<h2 id="adaboost">Adaboost</h2>
+
+<h2 id="gradient-boost">Gradient boost</h2>
+
+<h3 id="xgboost">Xgboost</h3>
+
+<h3 id="lightbm">Lightbm</h3>
+
+<h3 id="catboost">Catboost</h3>
+
+
+	</div>
+</section>
+
+</div>
+
+    <!-- Contact -->
+
+
+
+<!-- Footer -->
+	<footer id="footer">
+		<div class="inner">
+			<ul class="icons">
+				
+					
+						<li>
+							<a href="https://github.com/carabedo" class="icon alt fa-github" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+								<span class="label">GitHub</span>
+							</a>
+						</li>
+					
+				
+			</ul>
+			<ul class="copyright">
+				<li>Design: <a href="https://html5up.net" target="_blank">HTML5 UP</a></li>
+		
+
+			</ul>
+		</div>
+	</footer>
+
+</div>
+
+<!-- Scripts -->
+	<script src="http://localhost:4000/home/assets/js/jquery.min.js"></script>
+	<script src="http://localhost:4000/home/assets/js/jquery.scrolly.min.js"></script>
+	<script src="http://localhost:4000/home/assets/js/jquery.scrollex.min.js"></script>
+	<script src="http://localhost:4000/home/assets/js/skel.min.js"></script>
+	<script src="http://localhost:4000/home/assets/js/util.js"></script>
+	<!--[if lte IE 8]><script src="http://localhost:4000/home/assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="http://localhost:4000/home/assets/js/main.js"></script>
+
+
+</body>
+
+</html>
