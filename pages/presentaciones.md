@@ -15,7 +15,7 @@ nav-menu: true
 <!-- Two -->
 <section id="two" class="spotlights">
 	<section>
-		<a href="generic.html" class="image">
+		<a href="https://carabedo.github.io/regularizacion/" class="image">
 			<img src="https://explained.ai/regularization/images/lagrange-animation.gif" alt="" data-position="center center" />
 		</a>
 		<div class="content">
@@ -31,7 +31,7 @@ nav-menu: true
 		</div>
 	</section>
 	<section>
-		<a href="generic.html" class="image">
+		<a href="https://carabedo.github.io/nlp/" class="image">
 			<img src="https://miro.medium.com/max/1228/1*UQw1pQuMVZKm3gEqTAo5lQ.png" alt="" data-position="top center" height=400px/>
 		</a>
 		<div class="content">
@@ -47,7 +47,7 @@ nav-menu: true
 		</div>
 	</section>
 	<section>
-		<a href="generic.html" class="image">
+		<a href="https://carabedo.github.io/deploy/" class="image">
 			<img src="{% link assets/images/pic10.jpg %}" alt="" data-position="25% 25%" />
 		</a>
 		<div class="content">
@@ -62,8 +62,8 @@ nav-menu: true
 			</div>
 		</div>
 	</section>
-	<section>
-		<a href="generic.html" class="image">
+    <section>
+		<a href="https://carabedo.github.io/introredes/" class="image">
 			<img src="{% link assets/images/pic10.jpg %}" alt="" data-position="25% 25%" />
 		</a>
 		<div class="content">
