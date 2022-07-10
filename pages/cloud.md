@@ -2,7 +2,7 @@
 title: cloud & security
 layout: page
 description: ethical hacking & cloud computing
-image: assets/images/pic07.jpg
+image: assets/images/cloud.png
 nav-menu: true
 ---
 

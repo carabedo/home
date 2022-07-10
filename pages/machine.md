@@ -1,8 +1,8 @@
 ---
-layout: landing
+layout: page
 title: machine learning
 description: deep learning, data science, python
-image: assets/images/pic07.jpg
+image: assets/images/ml.jpg
 nav-menu: true
 ---
 

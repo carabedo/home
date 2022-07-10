@@ -1,8 +1,8 @@
 ---
 title: web development
-layout: landing
+layout: page
 description: front, back 
-image: assets/images/pic07.jpg
+image: assets/images/dev.png
 nav-menu: true
 ---
 

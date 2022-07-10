@@ -1,8 +1,8 @@
 ---
 title: clases
-layout: landing
+layout: page
 description: 
-image: assets/images/pic07.jpg
+image: assets/images/clases.jpg
 nav-menu: true
 ---
 
